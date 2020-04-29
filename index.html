@@ -146,7 +146,7 @@
           
     <button onclick="SearchData()"> Display total Number of positive Cases   </button> 
     <button onclick="SearchData2()"> Display total Number of Deaths  </button>
-    <button onclick="SearchData3()"> Display total Number of Recovered   </button>
+    <button onclick="SearchData3()"> Display increase in positive cases  </button>
             
     </div>
       
@@ -410,14 +410,14 @@ function SearchData(){
   .then(data => {
         var temp = [];
         var tempNum = 0;
-        data.forEach(({ date,recovered  }) =>{
+        data.forEach(({ date,positiveIncrease   }) =>{
             var dateString  = String(date);
             var year   = dateString.substring(0,4);
             var month  = dateString.substring(4,6);
             var day    = dateString.substring(6,8);
             var date   = month + "/" + day + "/" + year;
             Dates.push(date);
-            casesConfirmed.push(recovered);
+            casesConfirmed.push(positiveIncrease );
         });
         
          document.getElementById("dataType").innerHTML = "Total Recovered";
