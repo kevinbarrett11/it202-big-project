@@ -375,7 +375,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -406,7 +406,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -437,7 +437,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
     fetch(url1)
   .then(response => response.json())
   .then(data => {
