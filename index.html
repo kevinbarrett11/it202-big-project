@@ -146,8 +146,8 @@
           
     <button onclick="SearchData()"> Display total Number of positive Cases   </button> 
     <button onclick="SearchData2()"> Display total Number of Deaths  </button>
-    <button onclick="SearchData3()"> Display increase in positive cases  </button>
-            
+    <button onclick="SearchData3()"> Display day by day positive cases  </button>
+    <button onclick="SearchData4()"> Display day by day deaths </button>
     </div>
       
       
@@ -187,6 +187,7 @@
    let casesConfirmed = [];
    let currentState;
    var return_first;
+   var searchType;
      google.charts.load('current', {packages: ['corechart', 'line']});
 google.charts.setOnLoadCallback(drawBasic);
       
@@ -344,7 +345,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -355,12 +356,12 @@ function SearchData(){
             var year   = dateString.substring(0,4);
             var month  = dateString.substring(4,6);
             var day    = dateString.substring(6,8);
-            var date   = month + "/" + day + "/" + year;
-            Dates.push(date);
+            var date1   = month + "/" + day + "/" + year;
+            Dates.push(date1);
             casesConfirmed.push(positive);
         });
             document.getElementById("dataType").innerHTML = "Total Positive Tests";
-
+         searchType = "Posative";
          print();
         drawBasic();
     });
@@ -385,11 +386,12 @@ function SearchData(){
             var year   = dateString.substring(0,4);
             var month  = dateString.substring(4,6);
             var day    = dateString.substring(6,8);
-            var date   = month + "/" + day + "/" + year;
-            Dates.push(date);
+            var date1   = month + "/" + day + "/" + year;
+            Dates.push(date1);
             casesConfirmed.push(death);
         });
                     document.getElementById("dataType").innerHTML = "Total Deaths";
+         searchType = "Deaths";
 
          print();
         drawBasic();
@@ -415,11 +417,42 @@ function SearchData(){
             var year   = dateString.substring(0,4);
             var month  = dateString.substring(4,6);
             var day    = dateString.substring(6,8);
-            var date   = month + "/" + day + "/" + year;
-            Dates.push(date);
+            var date1   = month + "/" + day + "/" + year;
+            Dates.push(date1);
             casesConfirmed.push(positiveIncrease );
         });
-        
+                 searchType = "posative cases each day";
+
+         document.getElementById("dataType").innerHTML = "Total Recovered";
+         print();
+        drawBasic();
+    });
+
+}
+            function SearchData4(){
+   
+
+    
+     
+    document.getElementById("search").style.display= "none";
+    document.getElementById("data").style.display= "block";
+
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+    fetch(url1)
+  .then(response => response.json())
+  .then(data => {
+        var temp = [];
+        var tempNum = 0;
+        data.forEach(({ date,deathIncrease   }) =>{
+            var dateString  = String(date);
+            var year   = dateString.substring(0,4);
+            var month  = dateString.substring(4,6);
+            var day    = dateString.substring(6,8);
+            var date1   = month + "/" + day + "/" + year;
+            Dates.push(date1);
+            casesConfirmed.push(deathIncrease );
+        });
+         searchType = "deaths each day";
          document.getElementById("dataType").innerHTML = "Total Recovered";
          print();
         drawBasic();
@@ -433,7 +466,6 @@ function SearchData(){
     var i;
     var len = casesConfirmed.length;
 
-             console.log(len);
              if(numberCountries == 1){
             var table = document.getElementById("tableData");
             var row = table.insertRow(0);
@@ -447,7 +479,6 @@ function SearchData(){
             var cell2 = row.insertCell(1);
             cell1.innerHTML = Dates[i];
             cell2.innerHTML = casesConfirmed[i];
-            console.log(Dates[i] + " " +  casesConfirmed[i]);
           }
 }
             
@@ -462,6 +493,7 @@ function SearchData(){
       data.addColumn('number', 'X');
       data.addColumn('number', State);
       casesConfirmed.reverse();
+      Dates.reverse();
 
      for(i = 0 ; i < casesConfirmed.length;i++){
             data.addRow([i,casesConfirmed[i]]);
@@ -474,7 +506,7 @@ function SearchData(){
           title: 'Time'
         },
         vAxis: {
-          title: 'Popularity'
+          title: searchType
         }
       };
 
@@ -509,7 +541,6 @@ function SearchData(){
         document.querySelectorAll('.view').forEach(view => {
           view.style.display = 'none'
           if (`#${view.id}` === item.hash) {
-            console.log('match')
             view.style.display = 'block'
           }
         })
