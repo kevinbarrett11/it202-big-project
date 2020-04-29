@@ -17,7 +17,7 @@
     }
 
     :root {
-      --mdc-theme-primary: #FF0000	;
+      --mdc-theme-primary: blue	;
     }
       table, td {
   border-spacing: 4px;
@@ -138,13 +138,16 @@
 </select>
   </datalist>
   <input type="submit">
+              <button onclick="SearchLocation()"> Get current State   </button>
 </form>
           
     <p id="demo">States Selected: </p> 
           
           
-    <button onclick="SearchData()"> Display Table of States   </button>   
-    <button onclick="SearchLocation()"> Get current State   </button>        
+    <button onclick="SearchData()"> Display total Number of positive Cases   </button> 
+    <button onclick="SearchData2()"> Display total Number of Deaths  </button>
+    <button onclick="SearchData3()"> Display total Number of Recovered   </button>
+            
     </div>
       
       
@@ -164,18 +167,13 @@
       
       
     <div id="data" class="view">
-      <h1 class="header">Data</h1>
+      <h1 class="header" id="dataType">Data</h1>
         
       <table id="tableData">
           
 </table>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-  <div>State: <span id="state"></span></div>
-    <div>City: <span id="city"></span></div>
-      <div>Latitude: <span id="latitude"></span></div>
-        <div>Longitude: <span id="longitude"></span></div>
-          <div>IP: <span id="ip"></span></div>
     </div>
   </main>
     
@@ -184,10 +182,11 @@
     
   <script>
    
-   let State = "IL";
+   let State = "";
    let Dates = [];
    let casesConfirmed = [];
    let currentState;
+   var return_first;
      google.charts.load('current', {packages: ['corechart', 'line']});
 google.charts.setOnLoadCallback(drawBasic);
       
@@ -214,18 +213,19 @@ google.charts.setOnLoadCallback(drawBasic);
   async: false, // set to false so order of operations is correct
   dataType: "jsonp",
   success: function(location) {
-    callback(location);
-    $('#state').html(location.state);
-    $('#city').html(location.city);
-    $('#latitude').html(location.latitude);
-    $('#longitude').html(location.longitude);
-    $('#ip').html(location.IPv4);
     stateAbbr = convertRegion(location.state, TO_ABBREVIATED);
-    callback(stateAbbr);
+    State = stateAbbr;
     document.getElementById("demo").innerHTML = "States Selected: " + stateAbbr;
   }
 });
+      
   }
+      
+      
+      
+      
+      
+      
 const TO_NAME = 1;
 const TO_ABBREVIATED = 2;
 
@@ -332,17 +332,41 @@ function convertRegion(input, to) {
       
       
 
-var return_first;
-function callback(response) {
-  return_first = response;
-  //use return_first variable here
-}
+
 
       
 
   
       
 function SearchData(){
+   
+
+    document.getElementById("search").style.display= "none";
+    document.getElementById("data").style.display= "block";
+
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+    fetch(url1)
+  .then(response => response.json())
+  .then(data => {
+        var temp = [];
+        var tempNum = 0;
+        data.forEach(({ date, positive }) =>{
+            var dateString  = String(date);
+            var year   = dateString.substring(0,4);
+            var month  = dateString.substring(4,6);
+            var day    = dateString.substring(6,8);
+            var date   = month + "/" + day + "/" + year;
+            Dates.push(date);
+            casesConfirmed.push(positive);
+        });
+            document.getElementById("dataType").innerHTML = "Total Positive Tests";
+
+         print();
+        drawBasic();
+    });
+
+}
+      function SearchData2(){
    
 
     
@@ -356,15 +380,47 @@ function SearchData(){
   .then(data => {
         var temp = [];
         var tempNum = 0;
-        data.forEach(({ date, state, positive, negative }) =>{
+        data.forEach(({ date, death }) =>{
             var dateString  = String(date);
             var year   = dateString.substring(0,4);
             var month  = dateString.substring(4,6);
             var day    = dateString.substring(6,8);
             var date   = month + "/" + day + "/" + year;
             Dates.push(date);
-            casesConfirmed.push(positive);
+            casesConfirmed.push(death);
         });
+                    document.getElementById("dataType").innerHTML = "Total Deaths";
+
+         print();
+        drawBasic();
+    });
+
+}
+      function SearchData3(){
+   
+
+    
+     
+    document.getElementById("search").style.display= "none";
+    document.getElementById("data").style.display= "block";
+
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+    fetch(url1)
+  .then(response => response.json())
+  .then(data => {
+        var temp = [];
+        var tempNum = 0;
+        data.forEach(({ date,recovered  }) =>{
+            var dateString  = String(date);
+            var year   = dateString.substring(0,4);
+            var month  = dateString.substring(4,6);
+            var day    = dateString.substring(6,8);
+            var date   = month + "/" + day + "/" + year;
+            Dates.push(date);
+            casesConfirmed.push(death);
+        });
+        
+         document.getElementById("dataType").innerHTML = "Total Recovered";
          print();
         drawBasic();
     });
@@ -372,12 +428,6 @@ function SearchData(){
 }
       
  
-
-
-      
-      
-      
-      
          function print(){
     var numberCountries = 1;         
     var i;
