@@ -45,9 +45,9 @@
           <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
           <span class="mdc-list-item__text">Home</span>
         </a>
-        <a class="mdc-list-item" href="#search">
+        <a class="mdc-list-item" href="#search" onclick="clearData()">
           <i class="material-icons mdc-list-item__graphic" aria-hidden="true">search</i>
-          <span class="mdc-list-item__text">Search</span>
+          <span class="mdc-list-item__text" >Search</span>
         </a>
         <a class="mdc-list-item" href="#data">
           <i class="material-icons mdc-list-item__graphic" aria-hidden="true">table_chart</i>
@@ -185,7 +185,6 @@
    let State = "";
    let Dates = [];
    let casesConfirmed = [];
-   let currentState;
    var return_first;
    var searchType;
      google.charts.load('current', {packages: ['corechart', 'line']});
@@ -203,6 +202,19 @@ google.charts.setOnLoadCallback(drawBasic);
  document.getElementById("demo").innerHTML = "States Selected: " + State;
 
 }
+      
+      
+  function clearData(){
+    State = "";
+    Dates = [];
+    casesConfirmed = [];
+    return_first;
+    searchType;
+    document.getElementById("demo").innerHTML = "States Selected: " + State;
+    document.getElementById("tableData").innerHTML = "";
+
+
+  }
    
       
   function SearchLocation(){
@@ -345,7 +357,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -375,7 +387,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -406,7 +418,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -437,7 +449,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
 
-     url1 = 'https://covidtracking.com/api/states/daily?state=' + State;
+     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
