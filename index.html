@@ -12,8 +12,17 @@
   <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
 
   <style>
+
+      p.view{
+          font-size: 85px;
+      }
+      h2.view{
+          font-size: 75px;
+      }
     .view {
       display: none;
+      text-align: center;
+
     }
 
     :root {
@@ -27,7 +36,7 @@
 
 </head>
 
-<body>
+<body onload="worldData()">
 
   <header class="mdc-top-app-bar" style="left: 0; top: 0;">
     <div class="mdc-top-app-bar__row">
@@ -71,7 +80,12 @@
 
     <div id="home" class="view">
       <h1>Home</h1>
-      <p>This is the Data comes from https://pomber.github.io/covid19/timeseries.json.</p>
+      <p >This is the Data comes from the Center For Disease Control.</p>
+      <h2>Total Cases United States</h2>
+      <p  style="color:#006400;" id="usCases"></p>
+      <h2>Total Deaths United States</h2>
+      <p  style="color:red;" id="usDeaths"></p>
+      <h1 id="weather"></h1>
     </div>
       
       
@@ -202,6 +216,43 @@ google.charts.setOnLoadCallback(drawBasic);
  document.getElementById("demo").innerHTML = "States Selected: " + State;
 
 }
+      
+  function todaysWeather(city){
+      
+     var url = " https://cors-anywhere.herokuapp.com/http://api.weatherstack.com/current?access_key=eec19601a1252f307c71c0b0043b5859&units=f&query=" + city;      
+      fetch(url)
+  .then(response => response.json())
+  .then(data => 
+        printMe(data));
+  }
+      
+  function printMe(data){
+      console.log(data);
+                  document.getElementById("weather").innerHTML = "todays temperture is " + data.current.temperature + " in " + data.location.name;
+
+  }
+      
+  function worldData(){
+     fetch("https://covidtracking.com/api/us")
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(({ death, positive }) => {
+       document.getElementById("usCases").innerHTML = positive;
+      document.getElementById("usDeaths").innerHTML = death; 
+    });
+  });
+      
+      $.ajax({
+  url: "https://geolocation-db.com/jsonp",
+  jsonpCallback: "callback",
+  async: false, // set to false so order of operations is correct
+  dataType: "jsonp",
+  success: function(location) {
+  todaysWeather(location.city);
+}
+      });
+
+  }
       
       
   function clearData(){
