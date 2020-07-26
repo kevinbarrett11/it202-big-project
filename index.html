@@ -425,7 +425,7 @@ function SearchData(){
             var day    = dateString.substring(6,8);
             var date1   = month + "/" + day + "/" + year;
             Dates.push(date1);
-            casesConfirmed.push(positive);
+            casesConfirmed.push(positive.toLocaleString());
         });
             document.getElementById("dataType").innerHTML = "Total Positive Tests";
          searchType = "Posative";
@@ -458,7 +458,7 @@ function SearchData(){
             var day    = dateString.substring(6,8);
             var date1   = month + "/" + day + "/" + year;
             Dates.push(date1);
-            casesConfirmed.push(death);
+            casesConfirmed.push(death.toLocaleString());
         });
                     document.getElementById("dataType").innerHTML = "Total Deaths";
          searchType = "Deaths";
@@ -490,7 +490,7 @@ function SearchData(){
             var day    = dateString.substring(6,8);
             var date1   = month + "/" + day + "/" + year;
             Dates.push(date1);
-            casesConfirmed.push(positiveIncrease );
+            casesConfirmed.push(positiveIncrease.toLocaleString() );
         });
                  searchType = "posative cases each day";
 
@@ -522,7 +522,7 @@ function SearchData(){
             var day    = dateString.substring(6,8);
             var date1   = month + "/" + day + "/" + year;
             Dates.push(date1);
-            casesConfirmed.push(deathIncrease );
+            casesConfirmed.push(deathIncrease.toLocaleString() );
         });
          searchType = "deaths each day";
          document.getElementById("dataType").innerHTML = "Deaths day By Day";
