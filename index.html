@@ -225,6 +225,7 @@ google.charts.setOnLoadCallback(drawBasic);
   .then(data => 
         printMe(data));
   }
+     
       
   function printMe(data){
       console.log(data);
@@ -237,8 +238,8 @@ google.charts.setOnLoadCallback(drawBasic);
   .then(response => response.json())
   .then(data => {
     data.forEach(({ death, positive }) => {
-       document.getElementById("usCases").innerHTML = positive;
-      document.getElementById("usDeaths").innerHTML = death; 
+       document.getElementById("usCases").innerHTML = positive.toLocaleString();
+      document.getElementById("usDeaths").innerHTML = death.toLocaleString(); 
     });
   });
       
