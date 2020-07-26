@@ -407,13 +407,16 @@ function SearchData(){
 
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
-
+    State = State.toLowerCase();
      url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+    
+    
     fetch(url1)
   .then(response => response.json())
-  .then(data => {
+    .then(data => {
         var temp = [];
         var tempNum = 0;
+       
         data.forEach(({ date, positive }) =>{
             var dateString  = String(date);
             var year   = dateString.substring(0,4);
@@ -430,6 +433,8 @@ function SearchData(){
     });
 
 }
+      
+      
       function SearchData2(){
    
 
@@ -437,6 +442,7 @@ function SearchData(){
      
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
+    State = State.toLowerCase();
 
      url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
@@ -468,6 +474,7 @@ function SearchData(){
      
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
+    State = State.toLowerCase();
 
      url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
@@ -499,6 +506,7 @@ function SearchData(){
      
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
+    State = State.toLowerCase();
 
      url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
