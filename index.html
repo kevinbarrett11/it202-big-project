@@ -409,7 +409,7 @@ function SearchData(){
     document.getElementById("search").style.display= "none";
     document.getElementById("data").style.display= "block";
     State = State.toLowerCase();
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+    url1 = "https://cors-anywhere.herokuapp.com/" + 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     
     
     fetch(url1)
@@ -445,7 +445,7 @@ function SearchData(){
     document.getElementById("data").style.display= "block";
     State = State.toLowerCase();
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 = "https://cors-anywhere.herokuapp.com/" + 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -477,7 +477,7 @@ function SearchData(){
     document.getElementById("data").style.display= "block";
     State = State.toLowerCase();
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 ="https://cors-anywhere.herokuapp.com/" + 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
@@ -509,7 +509,7 @@ function SearchData(){
     document.getElementById("data").style.display= "block";
     State = State.toLowerCase();
 
-     url1 = 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
+     url1 = "https://cors-anywhere.herokuapp.com/" + 'https://covidtracking.com/api/v1/states/' + State + '/daily.json';
     fetch(url1)
   .then(response => response.json())
   .then(data => {
