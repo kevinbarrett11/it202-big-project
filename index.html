@@ -234,7 +234,7 @@ google.charts.setOnLoadCallback(drawBasic);
   }
       
   function worldData(){
-     fetch("https://covidtracking.com/api/us")
+     fetch("https://cors-anywhere.herokuapp.com/https://covidtracking.com/api/us")
   .then(response => response.json())
   .then(data => {
     data.forEach(({ death, positive }) => {
